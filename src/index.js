@@ -62,7 +62,7 @@ const DEBOUNCE_DELAY = 300;
 inputEl.addEventListener('input', debounce(onSearchCounty, DEBOUNCE_DELAY));
 
 function onSearchCounty(evt) {
-  clearCoutryList();
+  clearContent();
   fetchCountries(evt.target.value.trim())
     .then(countries => {
       if (countries.length > 10) {
@@ -71,11 +71,11 @@ function onSearchCounty(evt) {
         );
       }
       if (countries.length > 1 && countries.length < 10) {
-        clearCoutryList();
+        clearContent();
         showListCounties(countries);
       }
       if (countries.length === 1) {
-        clearCoutryList();
+        clearContent();
         showMarkupCountry(countries);
       }
       if (countries.status === 404) {
@@ -108,16 +108,18 @@ function markupCountriesList(countries) {
 }
 
 function showListCounties(countries) {
+  clearContent();
   const markup = markupCountriesList(countries);
   countriesListEl.innerHTML = markup;
 }
 
 function showMarkupCountry(country) {
+  clearContent();
   const markup = renderMarkupCountryDescription(country);
   countryInfoEl.innerHTML = markup;
 }
 
-function clearCoutryList() {
+function clearContent() {
   countriesListEl.innerHTML = '';
   countryInfoEl.innerHTML = '';
 }
